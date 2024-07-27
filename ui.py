@@ -73,8 +73,9 @@ class DataManagementApp(QWidget):
     def select_folder(self):
         folder_path = QFileDialog.getExistingDirectory(self, 'Select Folder')
         if folder_path:
-            elided_text = self.fontMetrics().elidedText(folder_path, Qt.TextElideMode.ElideRight, self.path_label.width())
-            self.path_label.setText(elided_text)
+            # elided_text = self.fontMetrics().elidedText(folder_path, Qt.TextElideMode.ElideRight, self.path_label.width())
+            # self.path_label.setText(elided_text)
+            self.path_label.setText(folder_path)
             self.list_files(folder_path)
     
     def list_files(self, folder_path):
@@ -91,13 +92,21 @@ class DataManagementApp(QWidget):
         if not os.path.isdir(directory_path):
             self.show_error_message("파일 경로가 잘못되었습니다.")
             return
-        merge_files_in_directory
+        merge_files_in_directory(directory_path=directory_path, progress_bar=self.progress_bar)
+        self.show_complete_message("변환이 완료되었습니다.")
     
     def show_error_message(self, message):
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Critical)
         msg_box.setText(message)
         msg_box.setWindowTitle('Error')
+        msg_box.exec()
+        
+    def show_complete_message(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle('Complete')
         msg_box.exec()
     
     def reset_app(self):
