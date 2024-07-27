@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PySide6.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QFileDialog, QListWidget, QLabel
+from PySide6.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QFileDialog, QListWidget, QLabel, QProgressBar
 from PySide6.QtCore import Qt
 
 class DataManagement(QWidget):
@@ -52,10 +52,16 @@ class DataManagement(QWidget):
         self.reset_button.clicked.connect(self.reset_app)
         bottom_layout.addWidget(self.reset_button)
         
+        # add progress bar
+        #! progress bar는 파일 합치는 코드에서 업데이트 진행
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setValue(0)
+        
         # layout stack
         main_layout.addWidget(self.file_list)
         main_layout.addLayout(path_box_layout)
         main_layout.addLayout(bottom_layout)
+        main_layout.addWidget(self.progress_bar)
         
         # main layout setting
         self.setLayout(main_layout)
